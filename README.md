@@ -20,7 +20,7 @@ hornetq-configuration.xml
     </security-settings>
 
 
-Veja o Layout do projeto <a href='https://drive.google.com/file/d/0B8q_GPBeJwmybW1mS0hvTVBUVUU/edit?usp=sharing'> aqui...</a>
+Veja o Layout do projeto <a href='https://docs.google.com/file/d/0B8q_GPBeJwmybW1mS0hvTVBUVUU/view'> aqui...</a>
 
 
 
