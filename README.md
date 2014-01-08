@@ -4,7 +4,7 @@ manager-hornetq-broker
 Gerenciador administrativo do Horneqt, o qual disponibiliza as informações da Fila, em tempo de execução em forma de graficos, fornecendo funcionalidades de visualização e delete, etc...
 
 =====================
-Sera necessario adicionar a seguinte configuracao no arquivo: 
+OBS: sera necessario adicionar a seguinte configuracao no arquivo: 
 
 hornetq-configuration.xml
 
