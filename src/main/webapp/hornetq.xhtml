@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head></h:head>
+ 
+<body>
+      
+<h:form prependId="false" id="form" >
+	
+	
+	<p:panel id="pn1" >
+		
+		<f:facet name="header">Broker Hornetq</f:facet>
+			
+   		<p:growl id="growl" showDetail="true" />  
+   		
+   		<p:barChart id="barChart" value="#{monitorBean.filaChartModel}" legendPosition="ne" animate="true" 
+           	title="Fila Hornetq" style="width:550px;height:300px">  
+       		<p:ajax event="itemSelect" listener="#{monitorBean.itemSelect}" update="growl,barChart,filas" />  
+   		</p:barChart>	
+		
+		<p:dataTable id="filas" var="fila" value="#{monitorBean.filaDataModel}" 
+			scrollable="true"  
+			scrollHeight="200"
+			scrollRows="10" 
+	        selection="#{monitorBean.selectedFilas}"
+	        style="width:90%;font-size:14px"
+	         >  
+	
+	        <f:facet name="header">Mensagens Hornetq</f:facet>  
+	  
+	        <p:column selectionMode="multiple" style="width:3%" />  
+	  
+	        <p:column headerText="JMSMessageID" style="width:47%;font-size:14px">  
+	            #{fila.JMSMessageID}  
+	        </p:column>  
+	  		
+	        <p:column headerText="JMSDestination" style="width:20%;font-size:14px">  
+	            #{fila.JMSDestination}  
+	        </p:column>  
+	  
+	        <p:column headerText="JMSTimestamp" style="width:20%;font-size:14px">  
+	            #{fila.JMSTimestamp}  
+	        </p:column>
+	        
+	        <p:column headerText="JMSPriority" style="width:10%;font-size:14px;text-align:center">  
+	            #{fila.JMSPriority}  
+	        </p:column>   
+	  		   
+	    </p:dataTable>
+	    
+		<p:separator />	
+	    
+        <p:commandButton id="multiViewButton" value="View" icon="ui-icon-search"  
+               update=":form:displayFila" oncomplete="PF('detalheFila').show()"
+               style="heigth:12px;font-size:12px;"          
+               />
+        &nbsp;
+         <p:commandButton id="deleteButton" action="#{monitorBean.deleteMsgs}" 
+         		value="Delete" icon="ui-icon-close"  
+                update=":form:growl,:form:barChart,:form:filas" 
+                style="heigth:12px;font-size:12px;" 
+                />  
+                         
+        <p:blockUI block="pn1" trigger="deleteButton">
+			Deletando Mensagens Aguarde...<br />
+			<p:graphicImage value="/images/aguarde.gif"/>
+		</p:blockUI>                                     
+	    
+	    <p:dialog id="multiDialog" header="Detalhe da Messagem" widgetVar="detalheFila" resizable="false"  
+              height="400" width="750" showEffect="fade" hideEffect="explode">  
+  
+        <p:dataList id="displayFila" value="#{monitorBean.selectedFilas}" var="fila">  
+            #{fila.texto}  
+        </p:dataList>  
+  		
+   	 </p:dialog>  
+		
+	</p:panel>	
+   	
+ 
+</h:form>
+  
+</body> 
+</html>

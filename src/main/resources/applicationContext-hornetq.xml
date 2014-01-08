@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	
+	<!-- Dar Suport a Injecao de Dependencia do Bean via Annotations -->
+	<context:annotation-config />
+	<context:component-scan base-package="manager.broker" annotation-config="true" />
+	 
+	<bean name="connectionFactoryHornetQ" class="org.hornetq.jms.client.HornetQConnectionFactory">
+		<constructor-arg>
+			<bean class="org.hornetq.api.core.TransportConfiguration">
+				<constructor-arg value="org.hornetq.integration.transports.netty.NettyConnectorFactory" />
+				<constructor-arg>
+					<map key-type="java.lang.String" value-type="java.lang.Object">
+					    <entry key="host" value="127.0.0.1"></entry>
+						<entry key="port" value="5445"></entry>
+					</map>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean name="monitorHornetq" class="manager.broker.hornetq.MonitorHornetq" >
+		<property name="filas">
+			<list>
+				<value>queueDebito</value>
+				<value>queueBoleto</value>
+				<value>queueAntifraude</value>
+				<value>Pagamento_1</value>
+				<value>Router_1</value>
+				<value>httpReturn</value>
+				<value>DLQ</value>
+			</list>
+		</property>
+	</bean>
+		
+</beans>
